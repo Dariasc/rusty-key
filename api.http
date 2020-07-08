@@ -1,0 +1,7 @@
+@root = http://localhost:41337
+
+### Get the active public key 
+GET {{root}}/key
+
+### Post with encrypted Keepass password
+POST {{root}}/unlock
