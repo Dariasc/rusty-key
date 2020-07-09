@@ -2,7 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 
-const { execFile } = require('child_process')
+const { spawn } = require('child_process')
 const config = require('./config.json')
 
 const NodeRSA = require('node-rsa')
@@ -26,7 +26,7 @@ app.use(bodyParser.text())
 app.post('/unlock', (req, res) => {
   let decrypted = key.decrypt(Buffer.from(req.body, 'base64'))
   console.log(`password: ${decrypted}`)
-  let keepass = execFile(config.executable, ["--pw-stdin", config.database])
+  let keepass = spawn(config.executable, ["--pw-stdin", config.database])
   keepass.stdin.write(`${decrypted}\n`)
   res.send()
 })
